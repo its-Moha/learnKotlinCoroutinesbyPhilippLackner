@@ -40,7 +40,7 @@ fun main() {
     val job: Job = GlobalScope.launch {
 
 
-       delay(3000)
+        delay(3000)
         println("coroutine says hello from thread: ${Thread.currentThread().name}")
     }
 
@@ -49,7 +49,7 @@ fun main() {
 
     // Because main() finishes before the coroutine gets a chance to run.
 
-     // we will use
+    // we will use
     // runBlocking keeps the program alive
     // The coroutine gets time to run
     // join() waits until the coroutine finishes
@@ -61,7 +61,4 @@ fun main() {
     //Key takeaway
     //launch does NOT block the thread
     //If main() finishes, coroutines are canceled
-
-
-
 }
