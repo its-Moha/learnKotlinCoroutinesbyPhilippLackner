@@ -20,18 +20,25 @@ fun main(){
     //Dispatchers.Default    -> CPU-heavy work, complex Operations
     //Dispatchers.Unconfined -> Not recommended,
 
+
+    // launch will return a job and we can save it in a job variable
    val job: Job = GlobalScope.launch(Dispatchers.IO) {
        println(Thread.currentThread().name)
 
         // we shouldn't request network in main thread, but we can only change in the main thread
         // so will start coroutine in IO
 
+       repeat(5) {
+           println("This is the Answer")
+           delay(2000)
+       }
         val result = doNetworkCall3()
 
         // change now the thread to main
         withContext(Dispatchers.Default){
             println(Thread.currentThread().name)
             println(result)
+
 
         }
 
@@ -45,8 +52,13 @@ fun main(){
     //👉 It blocks the current thread
     //👉 It waits until all coroutines inside finish
     //👉 It is mainly used in main() or tests
+
+    //wait and block until our job is finishing
     runBlocking {
-        job.join()
+        delay(3000)
+        //job.join()
+        job.cancel()
+
     }
 
 
@@ -54,6 +66,7 @@ fun main(){
 
 suspend fun doNetworkCall3(): String{
 
-    delay(3000)
-    return ("This is the Answer")
+    delay(1000)
+
+    return ("This is the Answer yow")
 }
