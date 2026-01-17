@@ -1,6 +1,7 @@
 package org.example
 
 import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
 
 fun main()= runBlocking{
 
@@ -24,14 +25,34 @@ fun main()= runBlocking{
         //Think of it like a future promise:
         //“I will give you a String when I’m done, but maybe not immediately.”
 
-        val networkCall1: Deferred<String> = async {  doNetworkCall()}
-        val networkCall2: Deferred<String>  = async { doNetworkCall2()}
+        // concurrent
+        val time = measureTimeMillis {
+            val networkCall1: Deferred<String> = async {  doNetworkCall()}
+            val networkCall2: Deferred<String>  = async { doNetworkCall2()}
 
-        val call1 = networkCall1.await()
-        val call2 = networkCall2.await()
+            val call1 = networkCall1.await()
+            println(call1)
 
-        println(call1)
-        println(call2)
+
+            val call2 = networkCall2.await()
+            println(call2)
+        }
+
+
+        // sequential
+        val time2 = measureTimeMillis {
+            val networkCall1 = doNetworkCall()
+            val networkCall2 =  doNetworkCall2()
+
+            println(networkCall1)
+
+
+            println(networkCall2)
+        }
+
+        println(time)
+        println(time2)
+
     }
 
 
