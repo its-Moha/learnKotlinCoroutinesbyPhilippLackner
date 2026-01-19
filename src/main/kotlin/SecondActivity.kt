@@ -5,8 +5,7 @@ import kotlin.system.measureTimeMillis
 
 fun main()= runBlocking{
 
-    val job = async {
-
+    val job = GlobalScope.launch(Dispatchers.IO){
 
         //👉 Starts immediately
         //👉 Runs in background
@@ -54,6 +53,8 @@ fun main()= runBlocking{
         println(time2)
 
     }
+
+
 
 
        // join() and await() behave the same here.
